@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Parameterized JUnit Tests</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0">Guide to Parameterized JUnit Tests</h1>
+
+<p>The following is a brief guide to using JUnit to create parameterized tests, and is adapted from the video content of the Udemy course, <a href="https://www.udemy.com/junitandmockitocrashcourse/">JUnit and Mockito Crash Course</a>, by Bharath Thippireddy.  </p>
+<br>
+<h2 id="toc_1">Overview of JUnit</h2>
+
+<p>JUnit is a Java framework used to write unit tests.
+In JUnit3, it is necessary to extend<code>junit.framework.TestCase</code>and follow certain naming conventions.</p>
+
+<p>However, JUnit4 removes this necessity and provides annotations</p>
+
+<ul>
+<li><span style="color:DarkBlue"><code>@Test</code></span></li>
+<li><span style="color:DarkBlue"><code>@Ignore</code></span></li>
+<li><span style="color:DarkBlue"><code>@Before</code></span></li>
+<li><span style="color:DarkBlue"><code>@BeforeClass</code></span></li>
+<li><span style="color:DarkBlue"><code>@After</code></span></li>
+</ul>
+
+<p>The<code>@Before</code>method is called before each test method, and the<code>@After</code>method is called after each test method. Note that the test methods are run in any order.</p>
+
+<p>The following are static methods defined in the<code>org.junit.Assert</code>package:</p>
+
+<ul>
+<li><span style="color:DarkBlue"><code>assertNotNull</code></span>causes a test to fail if an object is null</li>
+<li><span style="color:DarkBlue"><code>assertEquals</code></span>causes a test to fail if two objects do not have the same values</li>
+<li><span style="color:DarkBlue"><code>assertSame</code></span>causes a test to fail if two objects are not references to the same object</li>
+</ul>
+
+<p>To access these methods, invoke the following import statement:<br>
+<code>import static org.junit.Assert*;</code></p>
+
+<p>To run the tests, JUnit provides a<code>BlockJUnit4ClassRunner</code>class, which </p>
+
+<ol>
+<li>scans through the annotations and runs the setup and cleanup methods</li>
+<li>runs the test methods</li>
+<li>reports which tests have passed and which have failed<br></li>
+</ol>
+
+<p>Tests are run from IDEs like <a href="https://www.eclipse.org/">Eclipse</a> and <a href="https://netbeans.org/">Netbeans</a> or with build tools like <a href="http://ant.apache.org/">Ant</a> or <a href="https://maven.apache.org/">Maven</a>, which internally use the<code>BlockJUnit4ClassRunner</code>class, the default JUnit test runner.</p>
+<br>
+<h2 id="toc_2">Parameterized JUnit Tests</h2>
+
+<p>Introduced in JUnit4, parameterized JUnit tests enable us to test different data sets in one method.</p>
+
+<p>Steps to writing parameterized JUnit tests:  </p>
+
+<ol>
+<li>Identify the input data and results</li>
+<li>Create, in the test class, <strong>fields</strong> for the inputs and result</li>
+<li>Create a <strong>constructor</strong> that takes in the inputs and result, and initialize the fields accordingly</li>
+<li>Create a <strong>static method</strong> that feeds the data, and annotate it with the<code>@Parameters</code> annotation</li>
+<li>Create the <strong>test method</strong> (which will be receiving the data sets one at a time)</li>
+<li>Annotate the test class with<code>@RunWith(Parameterized.class)</code></li>
+</ol>
+<br>
+<h3 id="toc_3"><span style="color:purple">Example: Test<code>add</code>method of<code>Calculator</code>class</span></h3>
+
+<p>Below is a type of JUnit test that you are likely already familiar with. It is a non-paramerized test for the<code>add</code>method of the<code>Calculator</code>class.<br>
+That is, the<code>testAdd</code>method has a<code>Calculator</code>object calculate the sum of two hard-coded input values, and uses the static<code>assertEquals</code>method to test that the calculated sum matches a certain hard-coded expected value.</p>
+
+<div><pre><code class="language-none">public class CalculatorImplTest {
+    private int num1, num2, expectedResult;
+    private Calculator calc = new CalculatorImpl();
+    
+    // Replace this test
+    @Test
+    public void testAdd() {
+        assertEquals(30, calc.add(10, 20));
+        assertEquals(60, calc.add(25, 35));
+    }
+}</code></pre></div>
+
+<p> In the above method, there are multiple assert statements. If one fails, the whole test will fail, without indicating which of the assert statements passed and which failed.<br>The objective is to replace this test method with a new one that does not contain hard-coded values for input and expected output.</p>
+<br>
+<h4 id="toc_4"><span style="color:brown">Step 1: Identify the input data and results</span></h4>
+
+<blockquote>
+<p>Inputs: <strong>num1</strong>,<strong>num2</strong><br>
+Result: <strong>result</strong> (should be <strong>num1</strong>+<strong>num2</strong>)</span></p>
+</blockquote>
+
+<h4 id="toc_5"><span style="color:brown">Step 2: Create fields for the inputs and result</span></h4>
+
+<blockquote>
+<pre style="color:black">
+public class CalculatorImplTest {
+    private int num1, num2, expectedResult;
+    ...
+}
+</pre>
+</blockquote>
+
+<h4 id="toc_6"><span style="color:brown">Step 3: Create a constructor that takes in the inputs and result, and initialize the fields accordingly</span></h4>
+
+<blockquote>
+<pre style="color:black">
+public class CalculatorImplTest {
+    private int num1, num2, expectedResult;  
+    public CalculatorImplTest(int num1, int num2, int expectedResult) {
+        this.num1 = num1;
+        this.num2 = num2;
+        this.expectedResult = expectedResult;
+    }
+    ...
+}
+</pre>
+</blockquote>
+
+<h4 id="toc_7"><span style="color:brown">Step 4: Create a static method that feeds the data, and annotate it with the<code>@Parameters</code> annotation</span></h4>
+
+<p><span style="color:black">JUnit looks for a<code>public static</code>method, annotated with<code>@Parameters</code>, that returns specifically a<code>Collection</code> of<code>Array</code>objects.  </p>
+
+<p>When the test method contains<code>n</code>inputs, each array should contain<code>n+1</code>elements, with the first<code>n</code>elements representing the inputs and the last element representing the expected output.
+</span></p>
+
+<blockquote>
+<pre style="color:black">
+public class CalculatorImplTest {
+    ...  
+    @Parameters
+    public static Collection<Integer[]> getTestData() {
+        return Stream.of(
+            new Integer[]{1, 2, 3},     <span style="color:grey">// 1 + 2 = 3</span>
+            new Integer[]{3, 4, 7}      <span style="color:grey">// 3 + 4 = 7</span>
+        ).collect(Collectors.toList());
+    }
+    ...
+}
+</pre>
+</blockquote>
+
+<h4 id="toc_8"><span style="color:brown">Step 5: Create the test method (which will be receiving the data sets one at a time)</span></h4>
+
+<blockquote>
+<pre style="color:black">
+public class CalculatorImplTest {
+    ...
+    Calculator calc = new CalculatorImpl();
+    ... 
+    @Test
+    public void testAdd() {
+        assertEquals(expectedResult, calc.add(num1, num2);
+    }   
+}
+</pre>
+</blockquote>
+
+<h4 id="toc_9"><span style="color:brown">Step 6: Annotate the test class with<code>@RunWith(Parameterized.class)</code><span></h4>
+
+<blockquote>
+<pre style="color:black">
+@RunWith(Parameterized.class)
+public class CalculatorImplTest {
+    private int num1, num2, expectedResult;
+    Calculator cal = new CalculatorImpl();<br>
+    public CalculatorImplTest(int num1, int num2, int expectedResult) {
+        this.num1 = num1;
+        this.num2 = num2;
+        this.expectedResult = expectedResult;
+    }<br>
+    @Parameters
+    public static Collection<Integer[]> getTestData() {
+        return Stream.of(
+            <span style="color:green">new Integer[]{1, 2, 3},</span><span style="color:grey">     // 1 + 2 = 3</span>
+            <span style="color:red">new Integer[]{4, 5, 6},</span><span style="color:grey">     // 4 + 5 != 6</span>
+            <span style="color:green">new Integer[]{3, 4, 7}</span><span style="color:grey">      // 3 + 4 = 7</span>
+        ).collect(Collectors.toList());
+    }<br>
+    @Test
+    public void testAdd() {
+        assertEquals(expectedResult, calc.add(num1, num2);
+    }
+}
+</pre>
+</blockquote>
+
+<p>When you run your tests, JUnit knows at runtime that it needs to use the<code>org.junit.runners.Parameterized</code>class to run the tests.</p>
+
+<p>This class knows how to invoke the<code>public static</code>method annotated with the<code>@Parameters</code>annotation (in this case the<code>getTestData</code>method), and to get each dataset (i.e. each <code>Array</code>) from the <code>Collection</code>.</p>
+
+<p>For each dataset in the<code>Collection</code>returned by the<code>@Parameters</code>method, JUnit invokes the test class constructor (in this case<code>CalculatorImplTest</code>) to create a new test class object, with the values from the dataset as the fields of the test class instance.  </p>
+
+<p>For example, for dataset<code>{1, 2, 3}</code>, JUnit creates a new<code>CalculatorImplTest</code>instance whose <code>num1</code>,<code>num2</code>, and<code>expectedResult</code>fields are set to 1, 2, and 3 respectively.</p>
+
+<h5 id="toc_10">Output</h5>
+
+<blockquote>
+<p><span style="color:green">&#10004;</span> testAdd[0]<br>
+<span style="color:red"><strong>&#10005;</strong></span> testAdd[1]<br>
+<span style="color:green">&#10004;</span> testAdd[2]
+</span></p>
+</blockquote>
+
+<p><span style="color:black">
+The output indicates which tests passed and which tests failed.  </p>
+
+<blockquote>
+<p>Since 1 + 2 = 3, the first test passed.<br>
+Since 4 + 5 != 6, the second test failed.<br>
+Since 3 + 4 = 7, the third test passed.
+</span></p>
+</blockquote>
+
+<h4 id="toc_11"><span style="color:brown">Step 4 Revisited</span></h4>
+
+<p>Change the expected value in the second case to the correct sum.</p>
+
+<pre>
+public class CalculatorImplTest {
+    ...
+    
+    @Parameters
+    public static Collection<Integer[]> getTestData() {
+        return Stream.of(
+            <span style="color:green">new Integer[]{1, 2, 3},
+            <b>new Integer[]{4, 5, 9},</b>
+            new Integer[]{3, 4, 7}</span>
+        ).collect(Collectors.toList());
+    }
+    ...
+}
+</pre>
+
+<h5 id="toc_12">Output</h5>
+
+<blockquote>
+<p><span style="color:green">&#10004;</span> testAdd[0]<br>
+<span style="color:green">&#10004;</span> testAdd[1]<br>
+<span style="color:green">&#10004;</span> testAdd[2]
+</span></p>
+</blockquote>
+
+<p>Now, all the tests pass.</p>
+
+
+
+
+</body>
+
+</html>
