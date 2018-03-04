@@ -394,12 +394,13 @@ That is, the<code>testAdd</code>method has a<code>Calculator</code>object calcul
     private int num1, num2, expectedResult;
     private Calculator calc = new CalculatorImpl();
     
-    // Replace this test
+    // Replace this test<span style="color:DarkRed">
     @Test
     public void testAdd() {
         assertEquals(30, calc.add(10, 20));
         assertEquals(60, calc.add(25, 35));
     }
+    </span>
 }</code></pre></div>
 
 <p> In the above method, there are multiple assert statements. If one fails, the whole test will fail, without indicating which of the assert statements passed and which failed.<br>The objective is to replace this test method with a new one that does not contain hard-coded values for input and expected output.</p>
